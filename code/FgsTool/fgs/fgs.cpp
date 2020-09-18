@@ -42,7 +42,8 @@ fgs::fgs(QWidget *parent)
     treeWidget = new QTreeWidget(this);
     treeWidget->setFocusPolicy(Qt::NoFocus);
     treeWidget->setFont(QFont("arial", 10, QFont::Black));
-    treeWidget->setRootIsDecorated(false);
+    //treeWidget->setRootIsDecorated(false);
+    treeWidget->setRootIsDecorated(true);
     treeWidget->header()->setVisible(false);
 
     initWidget();
@@ -80,7 +81,6 @@ fgs::fgs(QWidget *parent)
     connect(addByPack,SIGNAL(addPack()),this,SLOT(slotPackConfirmClicked()));
     connect(addByMerge,SIGNAL(addMerge()),this,SLOT(sloMergeConfirmClicked()));
 
-
     m_PackProject.insert("S1000",1);
     m_PackProject.insert("M1000",2);
     m_PackProject.insert("M1000Pro",3);
@@ -108,16 +108,22 @@ void fgs::initWidget(void)
     settingItem->setText(0, tr("基本配置"));
     QTreeWidgetItem *funcItem = new QTreeWidgetItem(treeWidget);
     funcItem->setText(0, tr("功能设置"));
-    QTreeWidgetItem *funcItem_one = new QTreeWidgetItem(funcItem);
-    funcItem_one->setText(0, tr("信息显示"));
-    QTreeWidgetItem *funcItem_two = new QTreeWidgetItem(funcItem);
-    funcItem_two->setText(0, tr("打包"));
-    QTreeWidgetItem *funcItem_three = new QTreeWidgetItem(funcItem);
-    funcItem_three->setText(0, tr("提取"));
-    QTreeWidgetItem *funcItem_four = new QTreeWidgetItem(funcItem);
-    funcItem_four->setText(0, tr("合并"));
-    QTreeWidgetItem *funcItem_five = new QTreeWidgetItem(funcItem);
-    funcItem_five->setText(0, tr("分离"));
+    QTreeWidgetItem *funcItem_one = new QTreeWidgetItem(funcItem,QStringList(QString("信息显示")));
+    //funcItem_one->setText(0, tr("信息显示"));
+    QTreeWidgetItem *funcItem_two = new QTreeWidgetItem(funcItem,QStringList(QString("打包")));
+    //funcItem_two->setText(0, tr("打包"));
+    QTreeWidgetItem *funcItem_three = new QTreeWidgetItem(funcItem,QStringList(QString("提取")));
+    //funcItem_three->setText(0, tr("提取"));
+    QTreeWidgetItem *funcItem_four = new QTreeWidgetItem(funcItem,QStringList(QString("合并")));
+    //funcItem_four->setText(0, tr("合并"));
+    QTreeWidgetItem *funcItem_five = new QTreeWidgetItem(funcItem,QStringList(QString("分离")));
+    //funcItem_five->setText(0, tr("分离"));
+
+    funcItem->addChild(funcItem_one);
+    funcItem->addChild(funcItem_two);
+    funcItem->addChild(funcItem_three);
+    funcItem->addChild(funcItem_four);
+    funcItem->addChild(funcItem_five);
 
     QTreeWidgetItem *guideItem = new QTreeWidgetItem(treeWidget);
     guideItem->setText(0, tr("指导说明"));
@@ -197,7 +203,7 @@ void fgs::initDisplaySetWidget(void)
     functionBox->setSelected(true);
     functionBox->show();
 
-    btnInfoConfirm = new QPushButton(widgetScrollArea);
+    QPushButton *btnInfoConfirm = new QPushButton(widgetScrollArea);
     btnInfoConfirm->setStyleSheet("QPushButton{border:1px solid lightgray;background:rgb(230,230,230);border-radius:3px;}"
                          "QPushButton:hover{border-color:blue;background:#bee7fd;}");
     btnInfoConfirm->setFocusPolicy(Qt::NoFocus);
@@ -233,6 +239,7 @@ void fgs::initDisplaySetWidget(void)
 
 void fgs::initPackSetWidget(void)
 {
+    m_packform.clear();
     m_packgLayout=new QGridLayout;
     packChild = new QWidget(widgetScrollArea);
     packChild->setLayout(m_packgLayout);
@@ -304,6 +311,7 @@ void fgs::initExtractSetWidget(void)
 
 void fgs::initMergeSetWidget(void)
 {
+    m_mergeform.clear();
     functionBox = new EGroupBox(widgetScrollArea);
     functionBox->setTitle(tr("合并配置"));
     functionBox->setSelected(true);
@@ -422,7 +430,7 @@ uint16_t fgs::crc_16(uint8_t *data, uint16_t len)
  */
 void fgs::slotAbout(void)
 {
-    QMessageBox::about(this,"版本信息","Version:FGS_0.3\nName:FGS\nDate:2020-08-06");
+    QMessageBox::about(this,"版本信息","Version:FGS_0.4\nName:FGS\nDate:2020-09-17");
 }
 
 /* @brief 树形菜单点击的信号槽处理接口

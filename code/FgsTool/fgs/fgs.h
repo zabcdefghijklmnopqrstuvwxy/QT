@@ -166,9 +166,6 @@ private:
     QWidget *mergeChild;
 
     QLineEdit *lineBasicPath;
-
-    QPushButton *btnInfoPath;
-    QPushButton *btnInfoConfirm;
     QLineEdit *lineInfoPath;
 
     QLineEdit *lineExtractPath;
