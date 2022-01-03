@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/back">
+        <file>16pic_3839444_b.jpg</file>
+        <file>Agg2.png</file>
+        <file>image.qrc</file>
+        <file>Agg2.ico</file>
+    </qresource>
+</RCC>
